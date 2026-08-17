@@ -1,0 +1,9 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "omp-models-editor",
+  "outputfilename": "omp-models-editor",
+  "author": {
+    "name": "zhukeming",
+    "email": "zhukeming123@qq.com"
+  }
+}

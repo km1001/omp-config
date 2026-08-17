@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>omp models editor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">
+      <span class="logo">omp</span>
+      <span class="brand-name">models editor</span>
+    </div>
+    <div class="path-chip" id="path-chip" title="config file path"></div>
+    <div class="topbar-actions">
+      <button id="btn-new" class="btn ghost">New</button>
+      <button id="btn-reload" class="btn ghost">Reload</button>
+      <button id="btn-save" class="btn primary">Save</button>
+    </div>
+  </header>
+
+  <div id="app">
+    <aside id="sidebar">
+      <div class="sidebar-head">
+        <span>Providers</span>
+        <button id="btn-add-provider" class="btn small" title="Add provider">+</button>
+      </div>
+      <div id="provider-list"></div>
+      <div class="sidebar-head" style="margin-top: 18px">
+        <span>Global</span>
+      </div>
+      <button id="btn-global" class="global-btn">equivalence &amp; order</button>
+    </aside>
+
+    <main id="main">
+      <section id="provider-panel" class="panel hidden">
+        <div class="panel-head">
+          <input id="f-provider-name" class="title-input" type="text" placeholder="provider name" spellcheck="false" />
+          <div class="panel-actions">
+            <button id="btn-test" class="btn ghost">Test</button>
+            <button id="btn-delete-provider" class="btn danger-ghost">Delete</button>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label class="field span2">
+            <span>baseUrl</span>
+            <input id="f-baseurl" type="text" placeholder="https://llm.example.com/v1" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>api</span>
+            <select id="f-api"></select>
+          </label>
+          <label class="field">
+            <span>auth</span>
+            <select id="f-auth"></select>
+          </label>
+          <label class="field span2">
+            <span>apiKey <em class="hint">env var name or literal token</em></span>
+            <div class="key-row">
+              <input id="f-apikey" type="password" placeholder="MYCO_API_KEY or sk-..." spellcheck="false" autocomplete="off" />
+              <button id="btn-toggle-key" class="btn small" title="show/hide">👁</button>
+            </div>
+          </label>
+          <label class="field check">
+            <input id="f-strict" type="checkbox" />
+            <span>disableStrictTools <em class="hint">for third-party Anthropic-compatible endpoints</em></span>
+          </label>
+        </div>
+
+        <details class="fold" id="fold-headers">
+          <summary>headers <em class="hint">extra request headers</em></summary>
+          <div id="headers-rows"></div>
+          <button class="btn small ghost" id="btn-add-header">+ header</button>
+        </details>
+
+        <details class="fold" id="fold-discovery">
+          <summary>discovery <em class="hint">live model listing</em></summary>
+          <div class="form-grid">
+            <label class="field">
+              <span>type</span>
+              <select id="f-discovery-type"></select>
+            </label>
+            <label class="field">
+              <span>baseUrl <em class="hint">optional override</em></span>
+              <input id="f-discovery-url" type="text" spellcheck="false" />
+            </label>
+          </div>
+        </details>
+
+        <details class="fold" id="fold-overrides">
+          <summary>modelOverrides <em class="hint">per-model patches on built-in providers</em></summary>
+          <div id="overrides-rows"></div>
+          <button class="btn small ghost" id="btn-add-override">+ override</button>
+        </details>
+
+        <div class="panel-head sub">
+          <h3>Models <em class="hint">appear in /model picker</em></h3>
+          <button class="btn small" id="btn-add-model">+ model</button>
+        </div>
+        <div id="model-list"></div>
+      </section>
+
+      <section id="global-panel" class="panel hidden">
+        <div class="panel-head">
+          <h2>Global settings</h2>
+        </div>
+        <details class="fold open" id="fold-equiv">
+          <summary>equivalence.overrides <em class="hint">map your provider ids into canonical groups</em></summary>
+          <div id="equiv-rows"></div>
+          <button class="btn small ghost" id="btn-add-equiv">+ mapping</button>
+        </details>
+        <details class="fold open" id="fold-order">
+          <summary>modelProviderOrder <em class="hint">tie-breaking between providers of same canonical id</em></summary>
+          <div id="order-list"></div>
+          <button class="btn small ghost" id="btn-add-order">+ provider</button>
+        </details>
+      </section>
+    </main>
+  </div>
+
+  <footer id="statusbar">
+    <span id="status-text">Loading…</span>
+    <span id="status-warnings"></span>
+  </footer>
+
+  <div id="toast" class="hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
